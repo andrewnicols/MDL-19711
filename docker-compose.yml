@@ -7,8 +7,7 @@ services:
       - "25432:5432"
     volumes:
       - ./root/master/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
-    tmpfs:
-      - /var/lib/postgresql/data:rw
+      - /var/lib/postgresql/data
     environment:
       #- PGDATA=/var/lib/postgresql/config
       - POSTGRES_USER=moodle
