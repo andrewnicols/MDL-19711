@@ -21,7 +21,7 @@ synchronous_standby_names = 'slave'
 
 log_statement = 'all'
 log_directory = 'pg_log'
-log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+log_filename = 'postgres.log'
 logging_collector = on
 log_min_error_statement = error
 EOF
