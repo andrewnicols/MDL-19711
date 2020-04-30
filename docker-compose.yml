@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  master:
+    build: .
+    user: root
+    ports:
+      - "25432:5432"
+    volumes:
+      - ./root/master/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    tmpfs:
+      - /var/lib/postgresql/data:rw
+    environment:
+      #- PGDATA=/var/lib/postgresql/config
+      - POSTGRES_USER=moodle
+      - POSTGRES_PASSWORD=moodle
+      - POSTGRES_DB=initial
+
+  slave:
+    build: .
+    user: root
+    ports:
+      - "35432:5432"
+    volumes:
+      - ./root/slave/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    tmpfs:
+      - /var/lib/postgresql/data:rw
+      - /var/lib/postgresql:rw
+    environment:
+      - POSTGRES_USER=moodle
+      - POSTGRES_PASSWORD=moodle
+      - POSTGRES_DB=initial
+    links:
+      - master
+    cap_add:
+      - NET_ADMIN
+
+  slave2:
+    build: .
+    user: root
+    ports:
+      - "45432:5432"
+    volumes:
+      - ./root/slave/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    tmpfs:
+      - /var/lib/postgresql/data:rw
+      - /var/lib/postgresql:rw
+    environment:
+      - POSTGRES_USER=moodle
+      - POSTGRES_PASSWORD=moodle
+      - POSTGRES_DB=initial
+    links:
+      - master
+    cap_add:
+      - NET_ADMIN
